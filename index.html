@@ -8,12 +8,29 @@
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="./style.css" />
     <title>Weather Dashboard</title>
   </head>
   <body>
-    <h2>Fetching Data</h2>
-    <button id="fetchData">Click Me!</button>
-    <main id="fetchedData"></main>
+    <h1>Weather Dashboard</h1>
+    <div id="display">
+      <div id="cityContainer">
+        <form id="searchForm">
+          <h2>Search for a City</h2>
+          <input id="location" placeholder="Enter City Name" />
+          <button id="searchBtn">Search</button>
+        </form>
+        <div id="searchedCities"></div>
+      </div>
+      <div id="forecastContainer">
+        <div id="currentForecast"></div>
+        <div id="fiveDayContainer">
+          <h2>5-Day Forecast:</h2>
+          <div id="fiveDayForecast"></div>
+        </div>
+      </div>
+    </div>
     <script src="./script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
   </body>
 </html>
