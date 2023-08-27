@@ -43,9 +43,13 @@ h1 {
 .button {
   margin: 10px 0;
   height: 30px;
-  background-color: grey;
+  background-color: lightgrey;
 }
 
+#searchedCities {
+  display: flex;
+  flex-direction: column;
+}
 #currentForecast {
   border: 1px solid black;
   background-color: rgb(149, 209, 232);

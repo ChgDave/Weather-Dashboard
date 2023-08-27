@@ -6,9 +6,13 @@ const locationInput = document.querySelector("#location");
 const form = document.querySelector("#searchForm");
 const dispCurrent = document.querySelector("#currentForecast");
 const dispFiveDay = document.querySelector("#fiveDayForecast");
+const dispSearchedCity = document.querySelector("#searchedCities");
 
+let searchedCity = [];
 // add function to render weather data
 function display(data) {
+  dispCurrent.innerHTML = "";
+  dispFiveDay.innerHTML = "";
   currentWeather(data);
   fiveDayWeather(data);
 }
@@ -47,7 +51,7 @@ function fiveDayWeather(data) {
   weatherCard(data, 39);
 }
 
-// add function to create weather card
+// add function to create weather card and render them
 function weatherCard(data, i) {
   const card = document.createElement("div");
   const headerDisp = document.createElement("h4");
@@ -74,11 +78,10 @@ function weatherCard(data, i) {
   card.append(headerDisp, headerImg, tempDisp, windDisp, humidityDisp);
   dispFiveDay.append(card);
 }
-
-function getData(e) {
-  e.preventDefault();
+// add function to get weather data and render them
+function getData(location) {
   //construct the URL for geocoding
-  const urlGeo = `https://api.openweathermap.org/geo/1.0/direct?q=${locationInput.value}&appid=7903dacd04b26691274b62eff226d9c4`;
+  const urlGeo = `https://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=7903dacd04b26691274b62eff226d9c4`;
 
   fetch(urlGeo)
     .then(function (response) {
@@ -100,4 +103,77 @@ function getData(e) {
     });
 }
 
-form.addEventListener("submit", getData);
+// add function to save info to local storage
+function save() {
+  //does the local storage exist? if it doesnt exist, then simply push the value into the local stroage
+  if (!JSON.parse(localStorage.getItem("Searched Cities"))) {
+    searchedCity.push(locationInput.value.toLowerCase());
+    localStorage.setItem("Searched Cities", JSON.stringify(searchedCity));
+  } else if (
+    // if the local storage exist, then compare if the value is there.
+    !JSON.parse(
+      localStorage
+        .getItem("Searched Cities")
+        .includes(locationInput.value.toLowerCase())
+    )
+  ) {
+    searchedCity.push(locationInput.value.toLowerCase());
+    localStorage.setItem("Searched Cities", JSON.stringify(searchedCity));
+  }
+}
+
+// add function to render the searched city btn
+function dispCity() {
+  dispSearchedCity.innerHTML = "";
+  JSON.parse(localStorage.getItem("Searched Cities")) &&
+    (searchedCity = JSON.parse(localStorage.getItem("Searched Cities")));
+
+  searchedCity.forEach(function (el) {
+    const btn = document.createElement("button");
+    // add code to capitalize each word
+    let nameArr = el.split(" ");
+    let capitalNameArr = [];
+    console.log(nameArr);
+    nameArr.forEach(function (el) {
+      let array = el.split("");
+      array[0] = array[0].toUpperCase();
+      el = array.join("");
+      console.log(el);
+      capitalNameArr.push(el);
+    });
+
+    let capitalName = capitalNameArr.join(" ");
+
+    btn.textContent = capitalName;
+    btn.dataset.name = el;
+    btn.classList.add("button");
+    dispSearchedCity.append(btn);
+  });
+}
+// add function for from submit
+function formSubmit(e) {
+  e.preventDefault();
+  save();
+  getData(locationInput.value);
+  dispCity();
+  locationInput.value = "";
+}
+
+// add function for initiation
+function init() {
+  JSON.parse(localStorage.getItem("Searched Cities")) &&
+    (searchedCity = JSON.parse(localStorage.getItem("Searched Cities")));
+  dispCity();
+  searchedCity[0] && getData(searchedCity[0]);
+}
+
+// add event listener for the form submit
+form.addEventListener("submit", formSubmit);
+
+// add event listener for the saved city button
+dispSearchedCity.addEventListener("click", function (e) {
+  console.log(e.target.dataset.name);
+  getData(e.target.dataset.name);
+});
+
+init();
