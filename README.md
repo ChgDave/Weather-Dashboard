@@ -48,12 +48,12 @@ The following image shows the web application's appearance and functionality:
 ## Github Repo Link
 
 The link for the github repository for this project is:
-https://github.com/ChgDave/Work-Day-Scheduler
+https://github.com/ChgDave/Weather-Dashboard
 
 ## URL Deployment Link
 
 The link for the deployed website for this project is:
-https://chgdave.github.io/Work-Day-Scheduler/
+https://chgdave.github.io/Weather-Dashboard/
 
 ---
 
