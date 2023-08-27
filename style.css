@@ -3,12 +3,14 @@ body {
   flex-wrap: wrap;
   flex-direction: column;
   width: 100vw;
+  margin: 0;
 }
 
 h1 {
   color: white;
   text-align: center;
   background-image: linear-gradient(to right, rgb(138, 138, 235), navy);
+  margin: 0;
 }
 
 #display {
