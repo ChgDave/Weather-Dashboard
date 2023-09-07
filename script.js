@@ -172,8 +172,10 @@ form.addEventListener("submit", formSubmit);
 
 // add event listener for the saved city button
 dispSearchedCity.addEventListener("click", function (e) {
-  console.log(e.target.dataset.name);
-  getData(e.target.dataset.name);
+  if (e.target.tagName === "BUTTON") {
+    console.log(e.target.dataset.name);
+    getData(e.target.dataset.name);
+  }
 });
 
 init();
